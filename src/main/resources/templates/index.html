@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+
+    <title> 超市管理系统- 主页</title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+    <div id="wrapper">
+        <!--左侧导航开始-->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="nav-close"><i class="fa fa-times-circle"></i>
+            </div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                                    <span class="block m-t-xs" style="font-size:20px;">
+                                        <i class="fa fa-area-chart"></i>
+                                        <strong class="font-bold">超市管理系统</strong>
+                                    </span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="logo-element">超市管理系统
+                        </div>
+                    </li>
+                    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+                        <span class="ng-scope">分类</span>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="index_v1">
+                            <i class="fa fa-home"></i>
+                            <span class="nav-label">主页</span>
+                        </a>
+                    </li>
+                    <shiro:hasPermission name="cashier:view">
+                        <li>
+                            <a class="J_menuItem" href="cashier" is="true">
+                                <i class="fa fa-rmb"></i>
+                                <span class="nav-label">收银台</span>
+                            </a>
+                        </li>
+                    </shiro:hasPermission>
+                    <shiro:hasPermission name="order:view">
+                        <li>
+                            <a class="J_menuItem" href="order">
+                                <i class="glyphicon glyphicon-credit-card"></i>
+                                <span class="nav-label">订单管理</span>
+                            </a>
+                        </li>
+                    </shiro:hasPermission>
+                    <shiro:hasAnyPermissions name="users:view,roles:view">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa fa-group"></i>
+                                <span class="nav-label">员工管理</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level">
+                                <shiro:hasPermission name="users:view">
+                                    <li>
+                                        <a class="J_menuItem" href="users">用户管理</a>
+                                    </li>
+                                </shiro:hasPermission>
+                                <shiro:hasPermission name="roles:view">
+                                    <li>
+                                        <a class="J_menuItem" href="roles">角色管理</a>
+                                    </li>
+                                </shiro:hasPermission>
+                            </ul>
+                        </li>
+                    </shiro:hasAnyPermissions>
+                    <shiro:hasAnyPermissions name="goods:view,goodsCategory:view">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa fa-list-alt"></i>
+                                <span class="nav-label">商品管理</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level">
+                                <shiro:hasPermission name="goods:view">
+                                    <li>
+                                        <a class="J_menuItem" href="goods">商品管理</a>
+                                    </li>
+                                </shiro:hasPermission>
+                                <shiro:hasPermission name="goodsCategory:view">
+                                    <li>
+                                        <a class="J_menuItem" href="goodsCategory">商品分类</a>
+                                    </li>
+                                </shiro:hasPermission>
+                            </ul>
+                        </li>
+                    </shiro:hasAnyPermissions>
+                    <shiro:hasPermission name="stock:view">
+                        <li>
+                            <a href="#">
+                                <i class="fa fa fa-list-alt"></i>
+                                <span class="nav-label">库存管理</span>
+                                <span class="fa arrow"></span>
+                            </a>
+                            <ul class="nav nav-second-level">
+
+                                <li>
+                                    <a class="J_menuItem" href="/stockpile">库存查询</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="stock?typeid=3">入库管理</a>
+                                </li>
+                                <li>
+                                    <a class="J_menuItem" href="stock?typeid=4">出库管理</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </shiro:hasPermission>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa fa-list-alt"></i>
+                            <span class="nav-label">单据管理</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="receiptses">单据查询</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="buyer">
+                                    <span class="nav-label">采购单据</span>
+                                    <span class="fa arrow"></span>
+                                </a>
+                                <ul class="nav nav-second-level">
+                                    <li>
+                                        <a class="J_menuItem menuItem_3" href="buyer">单据查询</a>
+                                    </li>
+                                    <li>
+                                        <a class="J_menuItem menuItem_3" href="addBuyerReceipts">创建单据</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+								<a class="J_menuItem" href="buyer?typeid=2">
+								    <span class="nav-label">超市调货</span>
+								    <span class="fa arrow"></span>
+								</a>
+								<ul class="nav nav-second-level">
+								    <li>
+								        <a class="J_menuItem menuItem_3" href="buyer?typeid=2">单据查询</a>
+								    </li>
+								    <li>
+								        <a class="J_menuItem menuItem_3" href="addBuyerReceipts?typeid=2">创建单据</a>
+								    </li>
+								</ul>
+                            </li>
+                            <li>
+								<a class="J_menuItem" href="buyer?typeid=3">
+								    <span class="nav-label">入库单据</span>
+								    <span class="fa arrow"></span>
+								</a>
+								<ul class="nav nav-second-level">
+								    <li>
+								        <a class="J_menuItem menuItem_3" href="buyer?typeid=3">单据查询</a>
+								    </li>
+								    <li>
+								        <a class="J_menuItem menuItem_3" href="addBuyerReceipts?typeid=3">创建单据</a>
+								    </li>
+								</ul>
+                            </li>
+                            <li>
+								<a class="J_menuItem" href="buyer?typeid=4">
+								    <span class="nav-label">出库单据</span>
+								    <span class="fa arrow"></span>
+								</a>
+								<ul class="nav nav-second-level">
+								    <li>
+								        <a class="J_menuItem menuItem_3" href="buyer?typeid=4">单据查询</a>
+								    </li>
+								    <li>
+								        <a class="J_menuItem menuItem_3" href="addBuyerReceipts?typeid=4">创建单据</a>
+								    </li>
+								</ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--左侧导航结束-->
+        <!--右侧部分开始-->
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-info " href="#"><i class="fa fa-bars"></i> </a>
+                        <form role="search" class="navbar-form-custom" method="post" action="search_results.html">
+                            <div class="form-group">
+                                <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search" id="top-search">
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" href="/outLogin">
+                                <i class="fa fa-power-off"></i> 退出登录
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="row J_mainContent" id="content-main">
+                <iframe id="J_iframe" width="100%" height="100%" src="index_v1" frameborder="0" data-id="index_v1" seamless></iframe>
+            </div>
+        </div>
+        <!--右侧部分结束-->
+    </div>
+
+    <!-- 全局js -->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+    <script th:src="@{/js/plugins/layer/layer.min.js}"></script>
+
+    <!-- 自定义js -->
+    <script th:src="@{/js/hAdmin.js}"></script>
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+
+    <!-- 第三方插件 -->
+    <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+
+</body>
+
+</html>

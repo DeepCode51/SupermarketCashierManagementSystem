@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 商品管理 </title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+    <link th:href="@{/css/plugins/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet">
+
+    <!-- Sweet Alert -->
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet">
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <!-- Panel Other -->
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>商品管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <!-- Example Events -->
+                        <div class="example-wrap">
+                            <div class="example">
+                                <div class="btn-group input-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+                                    <button type="button" id="add" class="btn btn-outline btn-default" data-toggle="modal" data-target="#myModal5">
+                                        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>新增
+                                    </button>
+<!--                                    <form class="form-inline">-->
+                                    <input type="text" placeholder="商品条码" id="code_search" name="code" style="margin-left: 20px;margin-bottom: 5px;width: 130px" maxlength="20" class="form-control">
+                                    <input type="text" placeholder="商品名" id="name_search" style="margin-bottom: 5px;width: 120px"  class="form-control">
+                                    <select class="form-control" name="gcid" style="margin-bottom: 5px;width: 120px" id="gcid_search">
+                                        <option value="0" >请选择商品分类</option>
+                                        <option th:each="gc : ${gcs}" th:value="${gc.gcid}" th:text="${gc.gcname}"></option>
+                                    </select>
+                                    <input type="text" placeholder="最小价格" id="minPrice_search" style="margin-bottom: 5px;width: 85px"  class="form-control" maxlength="11">
+                                    <input type="text" placeholder="最大价格" id="maxPrice_search" style="margin-bottom: 5px;width:85px"  class="form-control" maxlength="11">
+                                    <!--
+    </form>-->
+                                    <button type="button" class="btn btn-outline btn-default" id="btn-search">
+                                        <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <table id="exampleTableEvents" data-height="700" data-mobile-responsive="true">
+                                </table>
+                            </div>
+                        </div>
+                        <!-- End Example Events -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Panel Other -->
+    </div>
+
+
+    <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true" backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="title">新增商品</h4>
+                </div>
+                <div class="modal-body" style="background-color: #FFF;">
+                    <div class="row form-body form-horizontal m-t">
+                        <div class="col-md-12">
+                            <form id="myform">
+                                <input type="text" hidden id="gid" name="gid">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">商品编号：</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="code" id="code" class="form-control" placeholder="请输入商品条码">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div id="goodsImg">手机扫码绑定</div>
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">商品名：</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="name" id="name" class="form-control" placeholder="请输入商品名">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">价格：</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="price" class="form-control" name="price" placeholder="请输入商品规格">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">描述：</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="details" class="form-control" name="details" placeholder="请输入商品描述">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">商品分类：</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="gcid" id="gcid">
+                                            <option value="0" >请选择商品分类</option>
+                                            <option th:each="gc : ${gcs}" th:value="${gc.gcid}" th:text="${gc.gcname}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">商品图片：</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="img" name="img" hidden>
+                                        <form id="empForm" action="/upload_ajax" method="post" enctype="multipart/form-data">
+                                            <input type="file" name="file" id="pic" class="form-control">
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">规格：</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" id="specification" class="form-control" name="specification" placeholder="请输入商品规格">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">供应商：</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="manufacturer" id="manufacturer" class="form-control" placeholder="请输入供应商">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="btn-submit">保存</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div style="position: fixed;bottom: 20px;right: 20px" id="bar">
+        <div class="glyphicon glyphicon-qrcode" style="font-size: 50px;display: none" id="codebtn"></div>
+        <div class="code" id="barcode">
+            <div>扫码绑定扫码枪</div>
+            <img th:src="${img}" alt="">
+        </div>
+
+    </div>
+
+    <!-- 全局js -->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+    <!-- 自定义js -->
+    <script th:src="@{/js/content.js}"></script>
+
+    <script th:src="@{/js/jquery.form.js}"></script>
+
+
+    <!-- Bootstrap table -->
+    <script th:src="@{/js/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+    <script th:src="@{/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+    <script th:src="@{/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+    <!-- Sweet alert -->
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+
+
+    <!-- Peity -->
+    <script th:src="@{/js/demo/goods.js}"></script>
+</body>
+</html>

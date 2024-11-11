@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 单据查询 </title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+    <link th:href="@{/css/plugins/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet">
+
+    <!-- Sweet Alert -->
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet">
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>单据查询</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row row-lg">
+                <div class="col-sm-12">
+                    <!-- Example Events -->
+                    <div class="example-wrap">
+                        <div class="example">
+                            <div class="btn-group input-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+                                <!--                                    <form class="form-inline">-->
+                                <input type="text" placeholder="类型" id="uno_search"
+                                       style="margin-left: 20px;margin-bottom: 5px;width: 120px" maxlength="8"
+                                       class="form-control">
+                                <input type="text" placeholder="状态" id="real_name_search"
+                                       style="margin-bottom: 5px;width: 120px" class="form-control">
+                                <input type="date" placeholder="开始时间" id="startTime_search"
+                                       style="margin-bottom: 5px;width: 160px" class="form-control">
+                                <input type="date" placeholder="结束时间" id="endTime_search"
+                                       style="margin-bottom: 5px;width: 160px" class="form-control">
+                                <!--                                    </form>-->
+                                <button type="button" class="btn btn-outline btn-default" id="btn-search">
+                                    <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <table id="exampleTableEvents" data-height="700" data-mobile-responsive="true">
+                            </table>
+                        </div>
+                    </div>
+                    <!-- End Example Events -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Panel Other -->
+</div>
+
+
+<div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog" aria-hidden="true" backdrop="static">
+    <div class="modal-dialog modal-lg" id="pdfDemo">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="title">单据</h4>
+            </div>
+            <div class="modal-body" style="background-color: #FFF;">
+                <div class="row form-body form-horizontal m-t">
+                    <div class="col-md-12">
+                        <div class="ibox-content p-xl">
+                            <div class="row">
+                                <div class="col-sm-6 text-left">
+                                    <p>
+                                        <span><strong>创建日期：</strong> <span id="createTime"></span></span>
+                                    </p>
+                                    <p>
+                                        <span><strong>修改日期：</strong> <span id="updateTime"></span></span>
+                                    </p>
+                                </div>
+                                <div class="col-sm-6 text-right">
+                                    <h4>单据编号：</h4>
+                                    <h4 class="text-navy"><span id="rno"></span></h4>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive m-t">
+                                <table class="table invoice-table">
+                                    <thead>
+                                    <tr>
+                                        <th>产品名</th>
+                                        <th>数量</th>
+                                        <th>单价</th>
+                                        <th>总价</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="data">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /table-responsive -->
+                            <!--附件-->
+                            <div class="mail-attachment">
+                                <p>
+                                    <span><i class="fa fa-paperclip"></i> <span id="number">0</span> 个附件 - </span>
+                                    <a href="#">下载全部</a> |
+                                    <a href="#">预览全部图片</a>
+                                </p>
+
+                                <div class="attachment" id="attachment">
+
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <!--/附件-->
+                            <table class="table invoice-total">
+                                <tbody>
+                                <tr>
+                                    <td><strong>总价：</strong>
+                                    </td>
+                                    <td>&yen;<span id="total"></span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>操作人：</strong>
+                                    </td>
+                                    <td><span id="operator"></span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>审核人：</strong>
+                                    </td>
+                                    <td><span id="auditor"></span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="btn-submit">审核</button>
+                <button type="button" class="btn btn-primary" onclick="exportReportTemplet()" id="down-pdf-submit">下载PDF</button>
+                <button type="button" class="btn btn-primary"  id="down-submit">下载</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 全局js -->
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<!--pdf-->
+<script th:src="@{/js/plugins/pdf/html2canvas.min.js}"></script>
+<script th:src="@{/js/plugins/pdf/jspdf.debug.js}"></script>
+<script th:src="@{/js/plugins/pdf/canvas2image.js}"></script>
+
+<!-- 自定义js -->
+<script th:src="@{/js/content.js}"></script>
+
+
+<!-- Bootstrap table -->
+<script th:src="@{/js/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+<script th:src="@{/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+<script th:src="@{/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+<!-- Sweet alert -->
+<script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+
+
+<!-- Peity -->
+<script th:src="@{/js/demo/receipts.js}"></script>
+</body>
+</html>

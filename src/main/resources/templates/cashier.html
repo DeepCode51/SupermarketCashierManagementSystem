@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>收银台</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link th:href="@{css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{css/font-awesome.css}" rel="stylesheet">
+    <!-- Sweet Alert -->
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet">
+    <link th:href="@{css/plugins/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet">
+    <link th:href="@{css/animate.css}" rel="stylesheet">
+    <link th:href="@{css/style.css}" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row animated fadeInRight">
+            <div class="col-sm-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>收银信息</h5>
+                    </div>
+                    <div>
+                        <div class="row">
+                            <div class="form-group" style="margin-top: 20px">
+                                <div class="col-sm-10 col-sm-offset-1">
+                                    <div class="input-group">
+                                        <input type="text" placeholder="商品搜索" class="form-control" id="key"> <span class="input-group-btn"> <button type="button" id="goods_search" class="btn btn-primary">搜索
+                                            </button> </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="full-height-scroll row">
+                            <div id="s_goods" style="min-height: 150px" class="table-responsive col-sm-10 col-sm-offset-1">
+                                <table class="table table-striped table-hover">
+                                    <tbody id="goods">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="ibox-content no-padding border-left-right" style="text-align: center">
+                            <input type="text" hidden id="no" th:value="${no}">
+                            <img alt="image" class="img-responsive" th:src="${img}" style="display: inline-block;padding: 10px;min-width: 80%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>结算清单</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row row-lg">
+                            <div class="col-sm-12">
+                                <div class="example-wrap">
+                                    <div class="example">
+                                        <div class="btn-group input-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+                                            <button type="button" class="btn btn-outline btn-default" id="hang_one">
+                                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>挂单
+                                            </button>
+                                            <input type="text" placeholder="扫码或手动输入商品编号" id="code_search" name="code" style="margin-left: 20px;margin-bottom: 5px;width: 200px" maxlength="20" class="form-control">
+                                            <button type="button" class="btn btn-outline btn-default" id="addCode">
+                                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>添加
+                                            </button>
+                                        </div>
+                                        <table id="exampleTableEvents" data-height="700" width="100%" data-mobile-responsive="true">
+                                            <thead>
+                                                <tr>
+                                                    <th data-field="name">商品名称</th>
+                                                    <th data-field="price" data-width="80">零售价（元）</th>
+                                                    <th data-field="number" data-width="140">数量</th>
+                                                    <th data-field="total" data-width="80">总金额</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="cashierGoods">
+
+                                            </tbody>
+                                        </table>
+                                        <div style="position:relative">
+                                            <button class="btn btn-primary m" id="createOrder"><i class="fa fa-arrow-down"></i> 结算</button>
+                                            <div style="color: red;font-size: 20px;font-weight: bold;position: absolute;top: 15px; right: 20px">&yen;<span id="total" style="padding-left: 10px">0.00</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>挂单详情</h5>
+                    </div>
+                    <div>
+                        <div class="full-height-scroll row" style="padding:20px 0">
+                            <div id="g_keys" style="min-height: 200px" class="table-responsive col-sm-10 col-sm-offset-1">
+                                <table class="table table-striped table-hover">
+                                    <tbody id="keys">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--选择支付方式-->
+    <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">支付方式</h4>
+                </div>
+                <div class="modal-body">
+                    <div style="display: flex;justify-content: space-around">
+                        <button class="btn btn-primary dim btn-large-dim" type="button">现
+                        </button>
+                        <button class="btn btn-warning dim btn-large-dim" style="background-color: #1AAD19;border-color:#98E861; box-shadow:inset 0px 0px 0px #98E861, 0px 5px 0px 0px #98E861, 0px 10px 5px #999999; " type="button">微
+                        </button>
+
+                        <button class="btn btn-danger  dim btn-large-dim" style="background-color: #0E78FF;border-color:#00A0E8; box-shadow:inset 0px 0px 0px #00A0E8, 0px 5px 0px 0px #00A0E8, 0px 10px 5px #999999; " type="button">支
+                        </button>
+                        <button class="btn btn-primary  dim btn-large-dim" type="button">刷</button>
+                    </div>
+                    <div id="zf" style="display: flex;justify-content: space-around">
+                        <div><input type="text" id="xj" /></div>
+                        <div><input type="text" id="wx" /></div>
+                        <div><input type="text" id="zfb" /></div>
+                        <div><input type="text" id="sk" /></div>
+                    </div>
+                    <div style="margin: 20px">
+                        <div style="line-height: 50px;font-weight: bold;font-size: 30px">应收：&yen;<span id="ys" style="padding-left: 10px">0.00</span></div>
+                        <div style="line-height: 50px;font-weight: bold;font-size: 30px">实收：&yen;<span id="ss" style="padding-left: 10px">0.00</span></div>
+                        <div style="line-height: 50px;font-weight: bold;font-size: 30px">找零：&yen;<span id="zl" style="padding-left: 10px">0.00</span></div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" id="order-save" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script th:src="@{js/jquery.min.js}"></script>
+    <script th:src="@{js/bootstrap.min.js}"></script>
+
+    <!-- 自定义js -->
+    <script th:src="@{js/content.js}"></script>
+
+    <!-- Bootstrap table -->
+    <script th:src="@{js/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+    <script th:src="@{js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+    <script th:src="@{js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+    <!-- Sweet alert -->
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+    <!-- Peity -->
+    <script th:src="@{js/demo/cashier.js}"></script>
+
+</body>
+
+</html>

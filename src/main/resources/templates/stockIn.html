@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title th:if="${typeid}==3"> 商品入库</title>
+    <title th:if="${typeid}==4"> 商品出库</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+    <link th:href="@{/css/plugins/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet">
+
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <form th:action="${typeid}==3?'stock/addStockIn':'stock/addStockOut'" method="post">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5 th:switch="${typeid}"><span th:case="3">商品入库</span><span th:case="4">商品出库</span> </h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">单据搜索：</label>
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <input type="text" hidden th:value="${typeid}" id="typeid">
+                                    <input type="text" hidden th:value="${status}" id="status">
+                                    <input type="text" id="rno" style="width: 33%" placeholder="单据编号" class="form-control">
+                                    <input type="date" id="startDate" class="form-control" style="width: 33%" placeholder="开始时间">
+                                    <input type="date" style="width: 33%"  class="form-control" id="endDate" placeholder="截止时间"> <span class="input-group-btn">
+                                            <button type="button" class="btn btn-primary"
+                                                    id="search">搜索</button> </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <table id="exampleTableEvents" data-height="204" data-mobile-responsive="true">
+                            </table>
+                            <input type="text" hidden name="rid" id="rid">
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">库存类型：</label>
+
+                            <div class="col-sm-10">
+                                <select class="form-control m-b" name="type">
+                                    <option value="1">超市</option>
+                                    <option value="2">仓库</option>
+                                    <option value="3">残品</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">商品</label>
+                            <div class="col-sm-9" id="box">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <h3 class="text-center">商品名称</h3>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <h3 class="text-center">数量</h3>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <h3 class="text-center">生产日期</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button class="btn btn-primary" type="submit">保存内容</button>
+                                <button class="btn btn-white" type="submit">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- 全局js -->
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+<!-- 自定义js -->
+<script th:src="@{/js/content.js}"></script>
+
+<!-- Bootstrap table -->
+<script th:src="@{/js/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+<script th:src="@{/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+<script th:src="@{/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+
+<script th:src="@{/js/demo/stockIn.js}"></script>
+
+
+</body>
+
+</html>

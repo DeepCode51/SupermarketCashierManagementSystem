@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 商品分类管理 </title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+    <link th:href="@{/css/plugins/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet">
+
+    <!-- Sweet Alert -->
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet">
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <!-- Panel Other -->
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>商品分类管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <!-- Example Events -->
+                        <div class="example-wrap">
+                            <div class="example">
+                                <div class="btn-group input-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+                                    <button type="button" id="add" class="btn btn-outline btn-default" data-toggle="modal" data-target="#myModal5">
+                                        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>新增
+                                    </button>
+<!--                                    <form class="form-inline">-->
+<!--                                    </form>-->
+                                </div>
+                                <table id="exampleTableEvents" data-height="700" data-mobile-responsive="true">
+<!--                                    <thead>-->
+<!--                                        <tr>-->
+<!--                                            <th data-field="state" data-checkbox="true"></th>-->
+<!--                                            <th data-field="uid">ID</th>-->
+<!--                                            <th data-field="username">名称</th>-->
+<!--                                            <th data-field="password">价格</th>-->
+<!--                                        </tr>-->
+<!--                                    </thead>-->
+                                </table>
+                            </div>
+                        </div>
+                        <!-- End Example Events -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Panel Other -->
+    </div>
+
+
+    <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true" backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="title">新增商品分类</h4>
+                </div>
+                <div class="modal-body" style="background-color: #FFF;">
+                    <div class="row form-body form-horizontal m-t">
+                        <div class="col-md-12">
+                            <form id="myform">
+                                <input type="text" hidden id="gcid" name="gcid">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">分类名：</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="gcname" id="gcname" class="form-control" placeholder="请输入分类名">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">备注：</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="comment" id="comment" class="form-control" placeholder="请输入备注">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="btn-submit">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+    <!--    MD5-->
+<!--    <script th:src="@{/js/md5.js}"></script>-->
+
+    <!-- 自定义js -->
+    <script th:src="@{/js/content.js}"></script>
+
+
+    <!-- Bootstrap table -->
+    <script th:src="@{/js/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+    <script th:src="@{/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+    <script th:src="@{/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+    <!-- Sweet alert -->
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+
+
+    <!-- Peity -->
+    <script th:src="@{/js/demo/goodsCategory.js}"></script>
+</body>
+</html>

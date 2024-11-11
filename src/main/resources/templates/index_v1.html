@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <!--<meta http-equiv="refresh" content="1">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--360浏览器优先以webkit内核解析-->
+
+
+    <title> 主页</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="row row-sm text-center">
+                            <div class="col-xs-6">
+                                <div class="panel padder-v item">
+                                    <div class="h1 text-info font-thin h1" th:text="${todayShowMarketVo.oyoPrice}">0</div>
+                                    <span class="text-muted text-xs">同比增长</span>
+                                    <div class="top text-right w-full">
+                                        <i class="fa fa-caret-down text-warning m-r-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="panel padder-v item bg-info">
+                                    <div class="h1 text-fff font-thin h1"  th:text="${todayShowMarketVo.oyoNum}">0</div>
+                                    <span class="text-muted text-xs">同比增长</span>
+                                    <div class="top text-right w-full">
+                                        <i class="fa fa-caret-down text-warning m-r-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="panel padder-v item bg-primary">
+                                    <div class="h1 text-fff font-thin h1"  th:text="${todayShowMarketVo.todayPrice}">0</div>
+                                    <span class="text-muted text-xs">销售金额</span>
+                                    <div class="top text-right w-full">
+                                        <i class="fa fa-caret-down text-warning m-r-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div class="panel padder-v item">
+                                    <div class="font-thin h1"  th:text="${todayShowMarketVo.todayNum}">0</div>
+                                    <span class="text-muted text-xs">日成交量</span>
+                                    <div class="bottom text-left">
+                                        <i class="fa fa-caret-up text-warning m-l-sm"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title" style="border-bottom:none;background:#fff;">
+                                <h5>周销售数据</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="echarts" id="echarts-line-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12" style="padding-right:0;">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title" style="border-bottom:none;background:#fff;">
+                                <h5>分类销售数据</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="echarts" id="echarts-bar-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 全局js -->
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/js/plugins/layer/layer.min.js"></script>
+    <!-- Flot -->
+    <script src="/js/plugins/flot/jquery.flot.js"></script>
+    <script src="/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="/js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="/js/plugins/flot/jquery.flot.pie.js"></script>
+
+    <!-- ECharts -->
+    <script src="/js/plugins/echarts/echarts-all.js"></script>
+
+    <!-- 自定义js -->
+    <script src="/js/content.js"></script>
+    <script src="/js/demo/echarts-demo.js"></script>
+    <!--flotdemo-->
+    <script type="text/javascript">
+        $(function() {
+        });
+    </script>
+</body>
+
+</html>

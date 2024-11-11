@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 用户管理 </title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/font-awesome.css}" rel="stylesheet">
+    <link th:href="@{/css/plugins/bootstrap-table/bootstrap-table.min.css}" rel="stylesheet">
+
+    <!-- Sweet Alert -->
+    <link th:href="@{/css/plugins/sweetalert/sweetalert.css}" rel="stylesheet">
+    <link th:href="@{/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <!-- Panel Other -->
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>用户管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <!-- Example Events -->
+                        <div class="example-wrap">
+                            <div class="example">
+                                <div class="btn-group input-group hidden-xs" id="exampleTableEventsToolbar" role="group">
+                                    <button type="button" id="add" class="btn btn-outline btn-default" data-toggle="modal" data-target="#myModal5">
+                                        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>新增
+                                    </button>
+<!--                                    <form class="form-inline">-->
+                                    <input type="text" placeholder="员工编号" id="uno_search" style="margin-left: 20px;margin-bottom: 5px;width: 120px" maxlength="8" class="form-control">
+                                    <input type="text" placeholder="姓名" id="real_name_search" style="margin-bottom: 5px;width: 120px"  class="form-control">
+                                    <input type="text" placeholder="联系方式" id="tel_search" style="margin-bottom: 5px;width: 140px"  class="form-control" maxlength="11">
+<!--                                    </form>-->
+                                    <button type="button" class="btn btn-outline btn-default" id="btn-search">
+                                        <i class="glyphicon glyphicon-search" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <table id="exampleTableEvents" data-height="700" data-mobile-responsive="true">
+<!--                                    <thead>-->
+<!--                                        <tr>-->
+<!--                                            <th data-field="state" data-checkbox="true"></th>-->
+<!--                                            <th data-field="uid">ID</th>-->
+<!--                                            <th data-field="username">名称</th>-->
+<!--                                            <th data-field="password">价格</th>-->
+<!--                                        </tr>-->
+<!--                                    </thead>-->
+                                </table>
+                            </div>
+                        </div>
+                        <!-- End Example Events -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Panel Other -->
+    </div>
+
+
+    <div class="modal inmodal fade" id="myModal5" tabindex="-1" role="dialog"  aria-hidden="true" backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="title">新增用户</h4>
+                </div>
+                <div class="modal-body" style="background-color: #FFF;">
+                    <div class="row form-body form-horizontal m-t">
+                        <div class="col-md-12">
+                            <form id="myform">
+                                <input type="text" hidden id="uid" name="uid">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">员工编号：</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="uno" id="uno" class="form-control" placeholder="请输入员工编号">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">用户名：</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="username" id="username" class="form-control" placeholder="请输入用户名">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">密码：</label>
+                                    <div class="col-sm-6">
+                                        <input type="password" id="password" class="form-control" name="password" placeholder="请输入密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">真实姓名：</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="real_name" id="real_name" class="form-control" placeholder="请输入真实姓名">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">联系方式：</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="tel" id="tel" class="form-control" placeholder="请输入联系方式">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">身份证号：</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="tel" id="card_id" class="form-control" placeholder="请输入身份证号">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">角色：</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="" id="rid">
+                                            <option th:each="role : ${roles}" th:value="${role.rid}" th:text="${role.rname}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="btn-submit">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+
+    <!--    MD5-->
+    <script th:src="@{/js/md5.js}"></script>
+
+    <!-- 自定义js -->
+    <script th:src="@{/js/content.js}"></script>
+
+
+    <!-- Bootstrap table -->
+    <script th:src="@{/js/plugins/bootstrap-table/bootstrap-table.min.js}"></script>
+    <script th:src="@{/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js}"></script>
+    <script th:src="@{/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+    <!-- Sweet alert -->
+    <script th:src="@{/js/plugins/sweetalert/sweetalert.min.js}"></script>
+
+
+    <!-- Peity -->
+    <script th:src="@{/js/demo/users.js}"></script>
+</body>
+</html>
